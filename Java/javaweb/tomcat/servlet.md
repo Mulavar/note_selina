@@ -1,10 +1,15 @@
 ## Servlet
 
 + [Servlet](#Servlet)
+	+ [Servlet生命周期](#servlet简介)  
     + [Servlet生命周期](#servlet生命周期)  
     + [Servlet运行过程](#servlet运行过程)  
     + [Servlet创建方式](#servlet创建方式)  
     + [Servlet配置](#servlet配置)  
+
+
+### Servlet简介
+Servlet是sun公司开发动态web的一门技术，核心是一个Servlet接口，里面的核心方法是`serve`，`HttpServlet`实现了该接口，并将该方法的逻辑拆分为了`doGet`和`doPost`。因此平时写javaweb时，我们都会创建一个servlet继承HttpServlet类，并重写这两个方法。
 
 
 
@@ -20,7 +25,7 @@
 
     每次请求都会执行
 
-    **req**：ServletRequest**内部封装的是http请求的信息
+    **req**：**ServletRequest**内部封装的是http请求的信息
 
     **res**：代表响应认为要封装的响应的信息
 
@@ -49,18 +54,20 @@
 
     + 覆盖尚未实现的方法(核心是**service**方法)
 
-    + **web.xml**配置
+    + **web.xml**配置（为什么需要配置？）
 
-	```xml
-<servlet>
+      servlet只是一个类，想要通过浏览器访问，需要映射到一个路径。
+
+    ```xml
+    <servlet>
     	<servlet-name>${name}</servlet-name>
     	<servlet-class>${全限定类名}</servlet-class>
-</servlet>
-<servlet-mapping>
+    </servlet>
+    <servlet-mapping>
     	<servlet-name>${name}</servlet-name>
     	<url-pattern>${虚拟映射路径}</url-pattern>
-</servlet-mapping>
-	```
+    </servlet-mapping>
+    ```
 
 2. 继承`HttpServlet`类
 
