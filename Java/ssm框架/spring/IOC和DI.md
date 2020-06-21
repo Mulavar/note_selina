@@ -9,7 +9,7 @@ IOC：控制反转，是一种设计思想。即将对象创建的控制权转�
 
 使用传统方式，A对B产生了依赖，也就是A和B之间存在一种耦合关系，而通过IOC的思想，这种依赖关系就被容器取代了，所有对象的创建依赖于容器。
 
-DI：依赖注入，为了更好地体现该设计思想而替代IOC的新名词。
+DI：依赖注入，是IOC的一种实现方式。
 
 
 
@@ -19,7 +19,7 @@ DI：依赖注入，为了更好地体现该设计思想而替代IOC的新名词
 
 #### [IOC和DI](https://blog.csdn.net/bestone0213/article/details/47424255)
 
-#### [SpringFirst](https://blog.csdn.net/gavin_john/article/details/79517418)
+#### [Spring入门](https://blog.csdn.net/gavin_john/article/details/79517418)
 
 
 
