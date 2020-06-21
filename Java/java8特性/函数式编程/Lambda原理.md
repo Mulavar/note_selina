@@ -31,7 +31,7 @@ java8的Lambda是通过invokedynamic和methodhandle实现的。
 5. 这个MethodHandle指向的是一个总是返回刚刚创建的.class类的实例的方法，由`MethodHandles.constant(samBase, inst)`完成
 6. 最后，用invokevirtual调用CallSite里面的MethdHandle，返回.class类的示例，即`new MethodReference$$Lambda$1`
 
-![image-20200214163849984](../../../resource/image-20200214163849984.png)
+![lambda执行流程](../../../resources/lambda执行流程.png)
 
 
 
