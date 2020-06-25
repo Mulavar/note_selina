@@ -9,41 +9,73 @@
 
 
 
-## 2. 注解的字节码格式
+## 2. 注解的字节码原理
 
-运行时可见注解的字节码表示如下
+根据JAVA虚拟机规范标准（JAVA SE 8)，注解其实是class文件的**属性**（变长字节数组），根据不同的场景，有不同的字节码格式表示，具体可以分为：
+
+since1.5
+
+- RuntimeVisibleAnnotations：运行时可见注解
+- RuntimeInvisibleAnnotations：运行时不可见注解
+- RuntimeVisibleParameterAnnotations：运行时可见方法参数注解
+- RuntimeInvisibleParameterAnnotations：运行时不可见方法参数注解
+- AnnotationDefault：注解默认值
+
+since1.8
+
+- RuntimeVisibleTypeAnnotations：运行时可见类型注解
+- RuntimeInvisibleTypeAnnotations：运行时不可见类型注解
+
+其中，反射API调用会涉及到的主要有这几类RuntimeVisibleAnnotations、RuntimeVisibleParameterAnnotations、AnnotationDefault，由于RuntimeVisibleParameterAnnotations的解析逻辑和RuntimeVisibleAnnotations基本一致（两者区别就是前者是使用在方法形参上的注解），所以我们以RuntimeVisibleAnnotations为例。
+
+RuntimeVisibleParameterAnnotations的字节码表示如下：
 
 ```java
 RuntimeVisibleAnnotations_attribute {
-		u2			 attribute_name_index;
-		u4			 attribute_length;
-		u2			 num_annotations;
-		annotation	 annotations[num_annotations];
+    // 前6个字节固定格式
+    u2			 attribute_name_index; 
+    u4			 attribute_length;
+    // 表示有几个注解
+    u2			 num_annotations;
+    // 注解数组
+    annotation	 annotations[num_annotations];
 }	
 
 annotation {
+    // 主要指向该的类信息
     u2		type_index;
+    // 该注解的属性键值对个数（K：属性名，V：属性值）
     u2		num_element_value_pairs;
     {
+        // 指向属性名
         u2				element_name_index;
+        // 属性值
         element_value	value;
     }  element_value_pairs[num_element_value_pairs];
 }
 
 element_value {
+    // 表示是哪种值类型，具体的有
+    // 基本类型、String、枚举、注解、Class、数组类型
     u1 tag;
+    // 联合体，里面分别定义了每种值类型的格式
     union {
+        // 基本类型和String类型
         u2 const_value_index;
         
+        // 枚举类型
         {
             u2 type_name_index;
             u2 const_name_index;
         } enum_const_value;
         
+        // class 类型
         u2 class_info_index;
         
+        // 注解类型
         annotation annotation_values;
         
+        // 数组类型
         {
             u2			  num_values;
             element_value values[num_values];
@@ -52,11 +84,25 @@ element_value {
 }
 ```
 
+由上图可见，只要按照该格式定义，结合常量池就可以轻松地写出解析代码，也因此第三节我们不会讲结如何解析字节数组。
+
+对于AnnotationDefault，我们知道声明注解可以对其成员属性使用default关键字，此时我们用注解修饰时就不用指定键值对，AnnotationDefault就是为这种场景而生的。
+
+```java
+AnnotationDefault_attribute {
+    // 前6个字节固定格式
+    u2 				attribute_name_index;
+    u4 				attribute_length;
+    // 见上一个代码块
+    element_value 	default_value;
+}
+```
+
 
 
 ## 3. JDK注解原理
 
-在该节的源码解读中，会省略部分不必要的源码，只留下最核心的源码讲述注解解析的流程。由于上一节已经详细解剖了运行时可见注解的字节码表示，所以最内部的解析逻辑不会详述，按照源码和字节码格式一一对应即可。
+在该节的源码解读中，会省略部分不必要的源码，只留下最核心的源码讲述注解解析的流程。由于上一节已经详细解剖了RuntimeVisibleAnnotations的字节码表示，所以最内部的字节数组解析逻辑不会详述，按照源码和字节码格式一一对应即可。
 
 **注：该节的源码取自JDK11。**
 
@@ -420,3 +466,4 @@ class AnnotationInvocationHandler implements InvocationHandler, Serializable {
 2. 将对注解的方法调用通过代理的方式传递给代理对象。
 
 而classfile除了`RuntimeVisibleAnnotations`属性以外，还有`RuntimeInVisibleAnnotations`（针对只在编译期出现的注解），`RuntimeVisibleParameterAnnotations`（针对方法参数运行时可见的注解），`RuntimeInVisibleParameterAnnotations`（针对方法参数只在编译期可见的注解）等注解属性，其字节码格式都大同小异，更多是JDK层逻辑代码稍微的变动。
+
