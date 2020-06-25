@@ -184,18 +184,3 @@ JVM 遇到**比较常见的下面 4 种情况**的时候会触发**类初始化*
 
 
 
-### QA：
-
-1. 基本类型
-
-2. 相同维度和元素类型的基本类型数组对应同一个 **Class 对象**
-
-    ```java
-    int[] ints = {1, 2};
-    int[] ints1 = {1, 2, 3};
-    int[] ints2 = {1, 1, 1};
-    System.out.println(ints.getClass()==ints1.getClass()); // true
-    System.out.println(ints1.getClass()==ints2.getClass()); //true
-    ```
-
-    
