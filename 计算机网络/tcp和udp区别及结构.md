@@ -8,7 +8,7 @@
 6. TCP的逻辑通信信道是**全双工**的可靠信道，UDP则是不可靠信道。
 7. 每一条TCP连接只能是点到点的，UDP支持一对一，一对多，多对一和多对多的交互通信。
 
-[参考资料](https://blog.csdn.net/m_xiaoer/article/details/72885418)
+[TCP与UDP的区别](https://blog.csdn.net/m_xiaoer/article/details/72885418)
 
 
 
@@ -20,7 +20,7 @@ UDP的数据就是完整的数据报，它不会对应用层的报文进行切�
 
 所以**TCP/IP是面向数据流，是把数据看作一连串字节流，太大就会将其切分**，UDP的数据单位是一个报文。
 
-[参考资料](https://www.zhihu.com/question/274382124)
+[如何理解TCP/IP协议是面向数据流的，而UDP协议是面向数据报的？](https://www.zhihu.com/question/274382124)
 
 
 
