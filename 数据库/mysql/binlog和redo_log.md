@@ -15,7 +15,7 @@ redo log是物理日志，记录的是**物理页的数据变动**，物理日�
 
 redo log有固定大小，结构类似循环队列，有两个指针：checkpoint和wirte pos在上面不断地向后推移。根据redo log，MYSQL可以实现故障恢复。
 
-![image-20200616232541667](../../Resources/redo_log_process.png)
+![redo_log](../../Resources/redo_log_process.png)
 
 
 
