@@ -140,7 +140,7 @@ bean的自动装配主要有三种策略：
 </bean>
 ```
 
-##### 
+
 
 
 
@@ -203,8 +203,6 @@ JDK1.5开始支持注解，而Spring是2.5开始支持。
 
 修饰类，表示将该类的bean对象注入到Spring容器中。
 
-
-
 @Component有个属性value，表示注入时设置的id。
 
 如：
@@ -247,3 +245,97 @@ xml功能更加强大，方便管理维护。注解适用于简单的属性注�
 
 
 ## 3. 面向切面编程—AOP
+
+### 基本概念
+
+在软件开发中，我们需要编写许多的业务代码，但还有很多代码是业务无关的，如
+
+- 日志功能
+- 缓存清理
+- 资源回收
+- 权限检查
+- …
+
+为了实现业务代码和非业务代码的分离，Spring利用代理模式抽出了非业务代码，形成了AOP思想。
+
+AOP全称Aspect Oriented Programming，意为面向切面编程，假设业务代码本身是一条纵向的逻辑流，我们在其中找几个点（切点，Pointcut），插入非业务代码，就像是一个个切面（Aspect），这就是一个简单的AOP例子。
+
+切面和切点很容易被混淆，严格来说，切点是切面的一部分信息，切面主要包含两部分信息：
+
+- 切入点
+- 切入后要执行的动作（Advice）
+
+而在具体的实现中，Spring为切面还加了一个信息：在切点的哪个阶段执行？由此衍生出有**方法执行前（Before）**、**方法执行后（After）**、**环绕（Around）**等等。
+
+
+
+关于AOP在Spring的实现有三种方式：
+
+- 实现原生的Spring API接口
+- 自定义切面类
+- 注解
+
+### 实现原生Spring API接口
+
+
+
+### 自定义切面类
+
+
+
+### 注解
+
+首先，使用注解需要导入配置：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--启用注解-->
+    <context:annotation-config/>、
+    <!--注解包扫描-->
+    <context:component-scan base-package="com.dong.dao"></context:component-scan>
+    <context:component-scan base-package="com.dong.log"></context:component-scan>
+    <!--启用aop注解-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>
+```
+
+其次，使用注解时，需要注意两部分：
+
+- 声明切面：声明某类是切面以及切入后实际要执行的动作（Advice）；
+- 定位切点：需要通过execution表达式定位需要切入的方法。
+
+下面介绍一下分别用到的注解。
+
+
+
+#### @Aspect
+
+只要对一个类使用@Aspect注解修饰，就表明这是一个切面。
+
+
+
+#### @Before
+
+
+
+#### @After
+
+
+
+#### @AfterReturning
+
+
+
+#### @Around
+
