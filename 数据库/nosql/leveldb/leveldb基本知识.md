@@ -24,7 +24,7 @@ sstable：immutable memtable到一定大小后dump到磁盘成为sstable，sstab
 
 Table文件格式如图
 
-![image-20190826234937583](../resource/sstable文件结构.png)
+![stable文件结构](../../../resources/sstable文件结构.png)
 
 
 
@@ -39,11 +39,11 @@ Table文件格式是划分为多个连续的Block，每个Block大小固定，�
 
 
 
-![image-20190826235426909](../resource/block共享前缀.png)
+![block共享前缀](../../../resources/block共享前缀.png)
 
 因此可得到Block文件的详细结构，其中**restart point记录每个record group的偏移量**：
 
-![img](../resource/block详细格式.png)
+![img](../../../resources/block详细格式.png)
 
 
 
@@ -67,7 +67,7 @@ Table文件格式是划分为多个连续的Block，每个Block大小固定，�
 
     - Concatenating Iterator：组合了LevelFileNumIterator以及Table Iterator，用于在某一层内的sstable文件中查询数据。Concatenating Iterator先通过LevelFielNumIterator找到对应的sstable文件，再使用table iterator遍历该sstable。
 
-        ![image-20190829195115057](../resource/Two-level迭代器.png)
+        ![two-level迭代器](../../../resources/Two-level迭代器.png)
 
 - MergingIterator：用于合并流程的迭代器。
 

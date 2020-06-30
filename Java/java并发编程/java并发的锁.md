@@ -25,7 +25,7 @@ Java对象在JVM中的存储可以分为三部分：
 
 如图所示
 
-![image-20200213224920621](../resource/markword.png)
+![markword](../../resources/markword.png)
 
 注：
 
@@ -48,7 +48,7 @@ Java对象在JVM中的存储可以分为三部分：
 
 获取到轻量锁的线程会在自己的栈帧中划出一块空间作为**lock record**，然后使用**CAS**将对象的markword替换为该**lock record**的指针。
 
-![图2.1](../resource/轻量级锁lockRecord.png)
+![轻量级锁](../../resources/轻量级锁lockRecord.png)
 
 CAS是**自旋锁**，当一个线程锁获取轻量锁失败时，他会不断自旋（死循环浪费cpu时间），自旋过久（可能**多个线程竞争导致有个线程一直获取不到锁，一直在自旋**）时间耗费的资源会超过线程挂起，则这时我们需要把轻量级锁升级为重量级锁，并把线程挂起。
 

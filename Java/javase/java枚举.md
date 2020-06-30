@@ -7,7 +7,7 @@
 
 ### 常用方法：
 
-![image-20190714161007471](../../resource/java枚举方法.png)
+![java枚举方法](../../resources/java枚举方法.png)
 
 
 
