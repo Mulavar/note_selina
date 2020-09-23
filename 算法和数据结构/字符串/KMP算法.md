@@ -19,7 +19,7 @@ KMP算法是先遍历pattern串获取一些有用信息，根据这些信息构�
 
 我们想要判断`String pattern = "aaab"`是否是`String text = "aaacaaaaaaab"`的子串，如果使用KMP算法，我们的步骤如下：
 
-1. 我们需要创建一个数组：`int[] next = new int[pattern.length()]`，这个next数组记录的信息如下：next[i]表示模式串在下标i之前的子串最长相等的前后缀长度；
+1. 我们需要创建一个数组：`int[] next = new int[pattern.length()]`，这个next数组记录的信息如下：**next[i]表示模式串在下标i之前的子串最长相等的前后缀长度**；
 
 2. 根据模式串填充next数组，如“aaab”我们填充如下：
 
