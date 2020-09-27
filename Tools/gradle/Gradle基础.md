@@ -4,7 +4,7 @@ Gradle 的构建脚本通过 Groovy 编写，Groovy是用于Java虚拟机的一�
 
 
 
-Gradle Wrapper是gradle的一层包装。由于gradle迭代非常迅速，如果每个项目都直接去引用，更改版本会非常麻烦，手动配置每一个项目对应的gradle也很不明智，所以安卓使用包装，通过读取配置文件中gradle的版本，为每个项目自动下载和配置gradle。
+Gradle Wrapper是gradle的一层包装。由于gradle迭代非常迅速，如果每个项目都直接去引用，更改版本会非常麻烦，手动配置每一个项目对应的gradle也很不明智，所以gradle引入了gradle-wrapper，**通过读取配置文件中gradle的版本，为每个项目自动下载和配置gradle**。
 
 
 
