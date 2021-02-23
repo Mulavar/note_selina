@@ -108,7 +108,7 @@ bean的自动装配主要有三种策略：
 2. byType：把与某bean（A）属性**具有相同类型**的其他bean（B）自动装配到该bean（A）的属性中；
 3. constructor：把与某bean（A）的构造器入参**具有相同类型**的其他bean（B）自动装配到该bean（A）的属性中；
 
-#### byName
+#### 2.3.1 byName
 
 ##### xml配置方式
 
@@ -125,7 +125,7 @@ bean的自动装配主要有三种策略：
 
 
 
-#### byType
+#### 2.3.2 byType
 
 ##### xml配置方式
 
@@ -244,9 +244,49 @@ xml功能更加强大，方便管理维护。注解适用于简单的属性注�
 
 
 
+### 2.5 JavaConfig配置
+
+`Spring 3.0`之后开始支持了一种更优的配置方式：基于Java类的配置方式。通过增加@Configuration注解表明这是一个配置类，其底层为@Component（即该类的bean对象也会被Spring容器接管）。
+
+@Configuration结合@Bean注解可以实现XML配置实现注入的功能，效果与
+
+```xml
+<beans>
+	<bean>...</bean>
+    <bean>...</bean>
+</beans>
+```
+
+类似，在使用@Bean注解时，表示将该方法返回的对象加载进Spring容器，在使用@Bean修饰方法时需要注意：
+
+1. 方法带返回值，且返回类型为想要被管理的bean的类型；
+2. 方法名即为默认的bean name，可使用@Bean的name属性自定义；
+3. 方法可带参数，则此时传入的参数也必须是被Spring容器管理的bean。
+
+以创建UserService和UserDao为例：
+
+```java
+@Configuration
+public class UserConfiguration {
+    @Bean
+    public UserService userService() {
+        return new UserService();
+    }
+    
+    @Bean
+    public UserDao userDao() {
+        return new UserDao();
+    }
+}
+```
+
+当Spring扫描该类时，会自动将UserConfiguration、UserService、UserDao的bean注入到Spring容器中进行托管。
+
+
+
 ## 3. 面向切面编程—AOP
 
-### 基本概念
+### 3.1 基本概念
 
 在软件开发中，我们需要编写许多的业务代码，但还有很多代码是业务无关的，如
 
@@ -262,80 +302,172 @@ AOP全称Aspect Oriented Programming，意为面向切面编程，假设业务�
 
 切面和切点很容易被混淆，严格来说，切点是切面的一部分信息，切面主要包含两部分信息：
 
-- 切入点
-- 切入后要执行的动作（Advice）
+- 切入点；
+- 切入后要执行的动作（Advice）。
 
-而在具体的实现中，Spring为切面还加了一个信息：在切点的哪个阶段执行？由此衍生出有**方法执行前（Before）**、**方法执行后（After）**、**环绕（Around）**等等。
+而在具体的实现中，Spring为切面还加了一个信息：在切点的哪个阶段执行？由此衍生出有：
 
-
+- 前置通知（Before）：在目标方法被调用之前调用通知功能；
+- 后置通知（After）：在目标方法被调用之后调用通知功能；
+- 返回通知(After-returning)：在目标方法成功执行之后调用通知；
+- 异常通知(After-throwing)：在目标方法抛出异常后调用通知；
+- 环绕通知(Around)：通知包裹了被通知的方法，在被通知的方法调用之前和调用之后执行自定义的行为。
 
 关于AOP在Spring的实现有三种方式：
 
-- 实现原生的Spring API接口
-- 自定义切面类
-- 注解
-
-### 实现原生Spring API接口
+1. 实现原生的Spring API接口
+2. 自定义切面类
+3. 注解
 
 
 
-### 自定义切面类
+### 3.2 实现原生Spring API接口
 
+Spring提供了诸如MethodBeforeAdvice、AfterAdvice、AfterReturningAdvice等原生接口，我们可以通过实现这些接口构建切面，如
 
+```java
+@Component
+public class Log implements MethodBeforeAdvice {
+    /**
+     * @param method  要执行的目标对象方法
+     * @param objects 参数
+     * @param o       目标对象
+     * @throws Throwable
+     */
+    public void before(Method method, Object[] objects, Object o) throws Throwable {
+        System.out.println(o.getClass().getName() + "-" + method.getName() + "将要执行");
+    }
+}
+```
 
-### 注解
-
-首先，使用注解需要导入配置：
+该Log类实现了MethodBeforeAdvice，成为了一个在方法执行前插入的切面，其次，我们需要在XML中进行配置，设置切点并建立其和切面的连接：
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop
-        https://www.springframework.org/schema/aop/spring-aop.xsd">
-
-    <!--启用注解-->
-    <context:annotation-config/>、
-    <!--注解包扫描-->
-    <context:component-scan base-package="com.dong.dao"></context:component-scan>
-    <context:component-scan base-package="com.dong.log"></context:component-scan>
-    <!--启用aop注解-->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
-</beans>
+<aop:config>
+    <!--切入点：execution表达式，execution(要执行的方法！)-->
+    <aop:pointcut id="pointcut" expression="execution(* com.dong.service.UserServiceImpl.*(..))"/>
+    <aop:advisor advice-ref="log" pointcut-ref="pointcut"></aop:advisor>
+</aop:config>
 ```
+
+**execution表示在方法执行时触发；\*表示方法返回值可以是任意类型，com.dong.service.UserServiceImpl.\*使用全限定类名和方法名指定要添加前置通知的方法，使用\*表示对com.dong.service.UserServiceImpl类下的所有方法都执行切入；(..)表示方法的参数列表，使用(..)表示方法的入参可以是任意类型。**
+
+需要注意，Log必须是一个被Spring容器管理的bean对象，否则Spring将无法找到该切面的bean，因此使用@Component注解修饰（也可以使用XML配置等方式注入）。
+
+
+
+### 3.3 自定义切面类
+
+自定义切面不需要实现Spring的原生接口，首先需要定义一个切面类，并将加载给Spring容器进行托管。
+
+```java
+@Component(value="diy")
+public class DiyPointCut {
+    public void before() {
+        System.out.println("方法执行前");
+    }
+
+    public void after() {
+        System.out.println("方法执行后");
+    }
+}
+```
+
+与3.2相似，该方式需要通过XML配置设置切点以及其和切面的连接。
+
+```xml
+<aop:config>
+    <!--自定义切面，ref：要引用的bean-->
+    <aop:aspect ref="diy">
+        <aop:pointcut id="pointcut" expression="execution(* com.dong.service.UserServiceImpl.*(..))"/>
+        <!--指定advice和切点的关系-->
+        <aop:before method="before" pointcut-ref="pointcut"></aop:before>
+        <aop:after method="after" pointcut-ref="pointcut"></aop:after>
+    </aop:aspect>
+</aop:config>
+```
+
+
+
+### 3.4 注解
+
+#### 3.4.1 启用注解功能
+
+首先，使用注解有两种方式：
+
+1. XML导入配置：
+
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xmlns:aop="http://www.springframework.org/schema/aop"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+            https://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            https://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+        <!--启用注解-->
+        <context:annotation-config/>、
+        <!--注解包扫描-->
+        <context:component-scan base-package="com.dong.dao"></context:component-scan>
+        <context:component-scan base-package="com.dong.log"></context:component-scan>
+        <!--启用aop注解-->
+        <aop:aspectj-autoproxy proxy-target-class="true"/>
+    </beans>
+    ```
+
+2. 使用`@EnableAspectJAutoProxy`注解需要被切的类
+
+    ```java
+    @Component(value = "userService")
+    @EnableAspectJAutoProxy
+    public class UserServiceImpl implements UserService {}
+    ```
+    
 
 其次，使用注解时，需要注意两部分：
 
 - 声明切面：声明某类是切面以及切入后实际要执行的动作（Advice）；
 - 定位切点：需要通过execution表达式定位需要切入的方法。
 
-下面介绍一下分别用到的注解。
+下面介绍一下注解的使用方式。
 
 
 
-#### @Aspect
+#### 3.4.2 注解使用
 
-只要对一个类使用@Aspect注解修饰，就表明这是一个切面。
+只要对一个类使用@Aspect注解修饰，就表明这是一个切面。可以对其中的方法使用
+
+- @Before
+- @After
+- @AfterReturning
+- @Around
+- @AfterThrowing
+
+注解指定切入时机，切入点通过execution表达式指定，举例如下：
+
+```java
+@Aspect
+@Component
+public class CustomPointCut {
+    @Before("execution(* com.dong.service.UserServiceImpl.*(..))")
+    public void before() {
+        System.out.println("aop:方法发生前");
+    }
+}
+```
 
 
 
-#### @Before
+## 4. 参考资料
 
+1. [ Spring最新5完整教程](https://www.bilibili.com/video/BV1WE411d7Dv)
 
+2. [Spring入门(十)：Spring AOP使用讲解](https://juejin.cn/post/6844903925112373262)
 
-#### @After
-
-
-
-#### @AfterReturning
-
-
-
-#### @Around
+3. [Spring AOP - 注解方式使用介绍](https://juejin.cn/post/6844903987062243341)
 
