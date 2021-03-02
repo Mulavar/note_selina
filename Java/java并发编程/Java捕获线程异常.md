@@ -1,5 +1,3 @@
-
-
 ## 捕获线程异常的方式
 
 ### 1. 定义线程异常捕获的处理器（实现UncaughtExceptionHandler接口的类实例对象）

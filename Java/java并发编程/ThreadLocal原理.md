@@ -4,7 +4,7 @@ ThreadLocal的作用是使得每个线程**都能拥有各自独立的对象副�
 
 
 
-## ThreadLocal实例
+## 2. ThreadLocal实例
 
 ```java
 

@@ -246,9 +246,9 @@ xml功能更加强大，方便管理维护。注解适用于简单的属性注�
 
 ### 2.5 JavaConfig配置
 
-`Spring 3.0`之后开始支持了一种更优的配置方式：基于Java类的配置方式。通过增加@Configuration注解表明这是一个配置类，其底层为@Component（即该类的bean对象也会被Spring容器接管）。
+`Spring 3.0`之后开始支持了一种更优的配置方式：基于Java类的配置方式。通过增加`@Configuration`注解表明这是一个配置类，其底层为@Component（即该类的bean对象也会被Spring容器接管）。
 
-@Configuration结合@Bean注解可以实现XML配置实现注入的功能，效果与
+`@Configuration`结合@Bean注解可以实现XML配置实现注入的功能，效果与
 
 ```xml
 <beans>
@@ -257,10 +257,10 @@ xml功能更加强大，方便管理维护。注解适用于简单的属性注�
 </beans>
 ```
 
-类似，在使用@Bean注解时，表示将该方法返回的对象加载进Spring容器，在使用@Bean修饰方法时需要注意：
+类似，在使用`@Bean`注解时，表示将该方法返回的对象加载进Spring容器，在使用@Bean修饰方法时需要注意：
 
 1. 方法带返回值，且返回类型为想要被管理的bean的类型；
-2. 方法名即为默认的bean name，可使用@Bean的name属性自定义；
+2. 方法名即为默认的bean name，可使用`@Bean`的name属性自定义；
 3. 方法可带参数，则此时传入的参数也必须是被Spring容器管理的bean。
 
 以创建UserService和UserDao为例：

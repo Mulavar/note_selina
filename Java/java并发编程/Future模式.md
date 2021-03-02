@@ -1,4 +1,4 @@
-## Callable
+## 1. Callable
 
 Callable接口定义如下：
 
@@ -14,7 +14,7 @@ Callable接口
 
 
 
-## Future
+## 2. Future
 
 Future的作用是用于获取Callable的执行结果或取消任务、查询是否完成等工作，使用get()返回结果（如果没执行完，该方法会阻塞）。
 
@@ -33,7 +33,7 @@ public interface Future<V> {
 
 
 
-## FutureTask
+## 3. FutureTask
 
 是Future和Runnable的一个实现类，里面封装了一个Callable对象，每次run时，调用Callable的call()方法，然后将结果存到成员变量outcome中。
 
@@ -59,11 +59,11 @@ if (c != null && state == NEW) {
 
 
 
+## 4. 参考资料
 
+1. [Callable、Future和FutureTask](https://www.cnblogs.com/dolphin0520/p/3949310.html)
 
-[Callable、Future和FutureTask](https://www.cnblogs.com/dolphin0520/p/3949310.html)
-
-[彻底理解java的future模式](https://www.cnblogs.com/cz123/p/7693064.html)
+2. [彻底理解java的future模式](https://www.cnblogs.com/cz123/p/7693064.html)
 
 
 

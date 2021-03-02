@@ -1,17 +1,17 @@
-### QA: 
+### QA:
 
 1. enum 类型不支持 public 和 protected 修饰符的构造方法，因此构造函数一定要是 private 或 friendly 的。也正因为如此，所以枚举对象是无法在程序中通过直接调用其构造方法来初始化的。
 2. 定义 enum 类型时候，如果是简单类型，那么最后一个枚举值后不用跟任何一个符号；但如果有定制方法，那么最后一个枚举值与后面代码要用分号';'隔开，不能用逗号或空格。
 
 
 
-### 常用方法：
+### 常用方法
 
 ![java枚举方法](../../resources/java枚举方法.png)
 
 
 
-Example：
+### Example
 
 ```java
 public enum Color { 
