@@ -107,8 +107,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 
 
-## 参考资料
+## 5. 参考资料
 
 1. [正确理解Thread Local的原理与适用场景](http://www.jasongj.com/java/threadlocal/)
 2. [ThreadLocal 内存泄漏问题深入分析](https://segmentfault.com/a/1190000022704085)
-

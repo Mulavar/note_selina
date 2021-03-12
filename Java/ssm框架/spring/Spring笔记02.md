@@ -144,9 +144,9 @@ public String[] selectImports(AnnotationMetadata annotationMetadata) {
 }
 ```
 
-在getAutoConfigurationEntry方法中，调用了getCandidateConfigurations方法，其中使用了SpringFactoriesLoader（基于Java SPI机制拓展）读取spring-boot-autoconfigure-xxx.jar包中的META-INF/spring.factories文件内容，得到自动装配类的全限定名并进行加载。
+在`getAutoConfigurationEntry`方法中，调用了`getCandidateConfigurations`方法，其中使用了`SpringFactoriesLoader`（基于Java SPI机制拓展）读取spring-boot-autoconfigure-xxx.jar包中的META-INF/spring.factories文件内容，得到自动装配类的全限定名并进行加载。
 
-spring.factories文件的内容如下，SpringFactoriesLoader将其解析为一个`Map<String, List<String>>`结构，其中key根据组件作用分类，而value则是对应的一系列自动装配类的全限定名。
+spring.factories文件的内容如下，`SpringFactoriesLoader`将其解析为一个`Map<String, List<String>>`结构，其中key根据组件作用分类，而value则是对应的一系列自动装配类的全限定名。
 
 ```
 # Initializers
@@ -185,7 +185,7 @@ org.springframework.boot.autoconfigure.freemarker.FreeMarkerTemplateAvailability
 ...
 ```
 
-由于`@SpringBootApplication`被`@EnableAutoConfiguration`注解修饰，因此这里会加载EnableAutoConfiguration对应的所有自动装配类（XXXXAutoConfiguration.class）注入到Spring容器中。
+由于`@SpringBootApplication`被`@EnableAutoConfiguration`注解修饰，因此这里会加载`EnableAutoConfiguration`对应的所有自动装配类（XXXXAutoConfiguration.class）注入到Spring容器中。
 
 
 
