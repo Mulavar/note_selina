@@ -1,3 +1,11 @@
+Docker的技术原理主要可以分为三部分：
+
+- Cgoups：资源隔离和分组；
+- Namespace：隔离文件系统、进程和网络；
+- rootfs
+
+
+
 ## Cgroup
 
 
