@@ -1,10 +1,10 @@
-## gradle-wrapper
+## 1. gradle-wrapper
 
-Gradle 的构建脚本通过 Groovy 编写，Groovy是用于Java虚拟机的一种敏捷的动态语言。
+Gradle 的构建脚本通过 Groovy 编写，Groovy 是用于 Java 虚拟机的一种敏捷的动态语言。
 
 
 
-Gradle Wrapper是gradle的一层包装。由于gradle迭代非常迅速，如果每个项目都直接去引用，更改版本会非常麻烦，手动配置每一个项目对应的gradle也很不明智，所以gradle引入了gradle-wrapper，**通过读取配置文件中gradle的版本，为每个项目自动下载和配置gradle**。
+Gradle Wrapper是 gradle 的一层包装。由于 gradle 迭代非常迅速，如果每个项目都直接去引用，更改版本会非常麻烦，手动配置每一个项目对应的 gradle 也很不明智，所以 gradle 引入了 gradle-wrapper，**通过读取配置文件中gradle的版本，为每个项目自动下载和配置 gradle **。
 
 
 
@@ -22,7 +22,7 @@ distributionUrl=http
 
 
 
-distributionUrl：要下载的gradle地址及版本，**gradle-wrapper**会去`/<user_path>/.gradle/wrapper/dists`目录下查找，如果没有对应版本的gradle就下载，所以如果我们卡顿下载不下来，可以先去找国内的镜像网站下载下来，再放入相应的路径中。
+distributionUrl：要下载的gradle地址及版本，**gradle-wrapper **会去 `/<user_path>/.gradle/wrapper/dists` 目录下查找，如果没有对应版本的 gradle 就下载，所以如果我们卡顿下载不下来，可以先去找国内的镜像网站下载下来，再放入相应的路径中。
 
 gradle有三种版本：
 
@@ -34,8 +34,8 @@ gradle有三种版本：
 
 具体顺序：
 
-1. 下载gradle对应版本
-2. 根据下载的gradle在`/<user_path>/.gradle/wrapper/dists`创建对应目录**gradle-xx-bin**，在**gradle-xx-bin**中创建名字为<distributionUrl_md5_hash>的目录，将下载的gradle放到里面
+1. 下载 gradle 对应版本
+2. 根据下载的gradle在`/<user_path>/.gradle/wrapper/dists`创建对应目录 **gradle-xx-bin** ，在 **gradle-xx-bin** 中创建名字为<distributionUrl_md5_hash>的目录，将下载的 gradle 放到里面
 3. 解压
 
 
@@ -44,9 +44,9 @@ gradle有三种版本：
 
 
 
-## Gradle配置文件
+## 2. Gradle配置文件
 
-gradle配置的目录结构跟maven项目非常类似，只是原来的pom.xml替换成了：
+gradle 配置的目录结构跟 maven 项目非常类似，只是原来的 pom.xml 替换成了：
 
 - settings.gradle：设置父子模块依赖一类的配置，用于模块交互；
 - build.gradle：用于项目构建。
