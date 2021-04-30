@@ -52,11 +52,11 @@ server:
 ```java
 @Component
 public class ServerProperty {
-@Value("${server.url}")
-private String url;
+    @Value("${server.url}")
+    private String url;
 
-// getter and setter
-// ...
+    // getter and setter
+    // ...
 }
 
 @Component

@@ -1,4 +1,4 @@
-go中interface{}类型的变量包括 **(type, value)** 两部分。
+Go 中 interface{} 类型的变量包括 **(type, value)** 两部分。
 
 type：包括 **static type** 和 **concrete type**。
 
@@ -9,7 +9,7 @@ type：包括 **static type** 和 **concrete type**。
 
 `reflect` 包主要有两个方法：`TypeOf()` 和 `ValueOf()`，分别获得对象的 **concreteType** 和 变量值。
 
-由于编译期间用的是static type，所以假设一个方法声明需要类型为 float64 的参数，我们不能传一个 static type是 interface{} ，concreate type 是 float64 的参数，这时候需要进行强转。
+由于编译期间用的是 static type，所以假设一个方法声明需要类型为 float64 的参数，我们不能传一个 static type是 interface{} ，concreate type 是 float64 的参数，这时候需要进行强转。
 
 强转有两种场景：
 
@@ -17,5 +17,7 @@ type：包括 **static type** 和 **concrete type**。
 2. 不知道强转的类型（可利用反射获取）
 
 
+
+Go 的运行时反射功能由 reflect 包实现，
 
 [参考文献](https://juejin.im/post/5a75a4fb5188257a82110544)
