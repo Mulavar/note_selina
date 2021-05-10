@@ -45,9 +45,11 @@ docker image rm xxx
 # 	镜像摘要
 ```
 
-> **Untagged和Deleted**
+> **Untagged 和 Deleted**
 >
-> 一个镜像可以有多个标签，但只有一个ID。当删除镜像时，首先要取消其连接的标签信息，即 untagged 信息。如果此时仍有其他标签连接该镜像，则 delete 行为不会发生。
+> 一个镜像可以有多个标签，但只有一个 ID。当删除镜像时，首先要取消其连接的标签信息，即 untagged 信息。如果此时仍有其他标签连接该镜像，则 delete 行为不会发生。
+
+
 
 #### 3.1.3 拉取镜像
 
@@ -59,6 +61,30 @@ docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]
 ```
 
 
+
+#### 3.1.4 制作镜像
+
+当我们运行容器并在容器里做一系列操作，如修改文件，安装一些依赖和第三方库，**并希望这部分变动保留下来，方便以后再度使用或分享给他人**，我们就可以选择将其制作成一个镜像。使用 `docker commit` 命令可以将容器制作成镜像，将容器的存储层保存下来。
+
+> 通过容器制作镜像，即是在原有镜像的基础上，再叠加容器的存储层，并构成新的镜像。以后我们运行这个新镜像时，就会拥有原有容器最后的文件变化。
+
+`docker commit` 命令使用如下：
+
+```bash
+# docker commit [选项] <container_id>/<container_name> [<repo_name>[:<tag_name>]]
+docker commit \
+	--author "Dong Jianhui <mukingdo@gmail.com>" \
+	--message "创建新镜像" \
+	dubbogo \
+	dubbogo:v3
+
+```
+
+
+
+#### 3.1.5 查看镜像历史
+
+使用 `docker history <repo_name>[:tag]` 可以查看镜像内的操作历史记录。
 
 ### 3.2 容器
 
@@ -123,3 +149,8 @@ docker container cp <path/to/file> <container_id>:<path/to/file>
 docker container cp <container_id>:<path/to/file> <path/to/file> 
 ```
 
+
+
+
+
+[Docker 从入门到实践—利用 commit 理解镜像构成](https://yeasy.gitbook.io/docker_practice/image/commit)
