@@ -78,3 +78,10 @@ Review别人代码的时候, 如果觉得没问题, 打钩之后在底下评论"
 git push origin -d mac
 ```
 
+
+
+## 6. Git 合并常用参数
+
+`git merge <branch_name> --no-f`：禁止 fast-forward 合并
+
+`git merge <branch_name> --log`：将被合并分支的 commit 消息收集作为该次 commit 的消息

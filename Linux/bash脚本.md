@@ -1,4 +1,4 @@
-### 执行方式
+## 1. 执行方式
 
 1. source
 
@@ -10,9 +10,9 @@
 
 
 
-### 常用语法
+## 2. 常用语法
 
-#### 默认变量
+### 2.1 默认变量
 
 $#：代表后接参数个数
 
@@ -24,7 +24,7 @@ $1、$2...：第一、第二个参数
 
 
 
-#### 条件表达式
+### 2.2 条件表达式
 
 ```bash
 if [ 判断条件 ]; then
@@ -55,7 +55,7 @@ case
 
 
 
-#### 函数
+### 2.3 函数
 
 需要写在bash文件最前面，也使用$1、\$2获取参数，但不是命令行的参数。
 
@@ -66,7 +66,7 @@ function func_name() {
 
 
 
-#### 循环
+### 2.4 循环
 
 ```bash
 #方式1
@@ -94,3 +94,101 @@ do
 done
 ```
 
+
+
+[[ expression ]]
+
+根据执行结果返回 0 或 1，0 表示成功，1 表示有问题。经常用于组合表达式，判断某个字符串或文件是否存在，来决定是否执行后面的命令（ `[[ expression ]] && expression1` ）。
+       
+
+-a file
+	True if file exists
+
+-b file
+
+​	True if file exists and is a block special file.
+
+-c file
+
+​	True if file exists and is a character special file.
+
+-d file
+              True if file exists and is a directory.
+-e file
+              True if file exists.
+-f file
+              True if file exists and is a regular file.
+-g file
+              True if file exists and is set-group-id.
+-h file
+              True if file exists and is a symbolic link.
+-k file
+              True if file exists and its sticky'' bit is set.
+-p file
+
+ 	True if file exists and is a named pipe (FIFO).
+
+-r file
+              True if file exists and is readable.
+-s file
+              True if file exists and has a size greater than zero.
+
+-t fd 
+
+​	True if file descriptor fd is open and refers to a terminal.
+
+-u file
+		True if file exists and its set-user-id bit is set.
+
+-w file
+    True if file exists and is writable.
+
+-x file
+
+​	True if file exists and is executable.
+
+-O file
+
+​	True if file exists and is owned by the effective user id.
+
+-G file
+
+​	True if file exists and is owned by the effective group id.
+
+-L file
+
+​	True if file exists and is a symbolic link.
+
+-S file
+
+​	True if file exists and is a socket.
+
+-N file
+
+​	True if file exists and has been modified since it was last read.
+
+file1 -nt file2
+
+​	True  if file1 is newer (according to modification date) than file2, or if file1 exists and file2 does not.
+
+file1 -ot file2
+
+​	True if file1 is older than file2, or if file2 exists and file1 does not.
+
+file1 -ef file2
+
+​	True  if file1 and file2 refer to the same device and inode numbers.
+
+​	True  if file1 and file2 refer to the same device and inode numbers.
+
+-o optname
+
+​	True if shell option optname is enabled.  See the  list  of  options under the description of the -o option to the set builtin below.
+
+-z string	
+
+​	True：字符串长度为 0，空字符串不行，如 [[ -z $NO_EXIST_VARIABLE ]]  去检测一个不存在的环境变量会报错，需要加上 "" 变成 `[[ -z "$NO_EXIST_VARIABLE" ]]
+
+-n string
+
+​	True if the length of string is non-zero.
