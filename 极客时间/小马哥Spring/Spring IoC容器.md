@@ -16,7 +16,7 @@ IoC 容器有两种实现方式
 
 依赖注入可以在这三种依赖来源里进行搜索并注入，而依赖查找的依赖来源只有前两部分。
 
-内建的 Bean 是普通的 Spring Bean，包括 BeanDefinitions 和 Singleton Objects，而内建依赖则是通过 AutowireCapableBeanFactory 中的 resolveDependency 方法来注册，这并非是一个 Spring Bean，无法通过依赖查找获取
+内建的 Bean 是普通的 Spring Bean，包括 BeanDefinitions 和 Singleton Objects，而内建依赖则是通过 AutowireCapableBeanFactory 中的 resolveDependency 方法来注册，这并非是一个 Spring Bean，无法通过依赖查找获取。
 
 
 
