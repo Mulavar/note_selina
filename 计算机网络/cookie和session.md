@@ -17,8 +17,6 @@ session的引入是因为HTTP是个无状态的协议，所以为了保证用户
 
 
 
-## 
-
 在第一次访问网站时，服务器会创建一个session保存用户的上下文信息，通过唯一的sessionId进行区分，并返回HTTP响应，响应的信息中包含Set-Cookie头部。该头部包含了sessionId。
 
 当用户第二次访问网站时，服务器读取HTTP请求带的cookie信息，验证成功后读取session信息返回响应。
