@@ -104,15 +104,17 @@ docker ps -q # 列出所有正在运行的容器的编号
 #### 3.2.2 运行容器
 
 ```bash
-docker container run [-it] [--rm] [-p <local_port>:<docker_port>] <container_name> <command_name>
+docker container run [-it] [--rm] [-p <local_port>:<docker_port>] [-v <local_path>:<docker_path>]<container_name> <command_name>
 # -i: 交互式操作
 # -t: 分配终端
 # --rm: 退出时删除该容器
-# -p: 映射容器端口和主机端口
+# -p: 映射主机端口和容器端口
+# -v: 映射宿主机卷和容器卷
 ##################################
 # example
 # docker container run hello-world
 # docker container run -it -p 8081:8081 opensuse bash
+# docker container run -it -v $GOPAT:/go golang
 
 # run是每次新建一个容器，start是重复使用容器
 docker container start <container_id>
