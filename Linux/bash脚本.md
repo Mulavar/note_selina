@@ -96,7 +96,7 @@ done
 
 
 
-[[ expression ]]
+### 2.5 [[ expression ]]
 
 根据执行结果返回 0 或 1，0 表示成功，1 表示有问题。经常用于组合表达式，判断某个字符串或文件是否存在，来决定是否执行后面的命令（ `[[ expression ]] && expression1` ）。
        
@@ -126,7 +126,7 @@ done
               True if file exists and its sticky'' bit is set.
 -p file
 
- 	True if file exists and is a named pipe (FIFO).
+​			  True if file exists and is a named pipe (FIFO).
 
 -r file
               True if file exists and is readable.
@@ -187,7 +187,7 @@ file1 -ef file2
 
 -z string	
 
-​	True：字符串长度为 0，空字符串不行，如 [[ -z $NO_EXIST_VARIABLE ]]  去检测一个不存在的环境变量会报错，需要加上 "" 变成 `[[ -z "$NO_EXIST_VARIABLE" ]]
+​	True：字符串长度为 0，空字符串不行，如 [[ -z $NO_EXIST_VARIABLE ]]  去检测一个不存在的环境变量会报错，需要加上 "" 变成 `[[ -z "$NO_EXIST_VARIABLE" ]]`
 
 -n string
 
