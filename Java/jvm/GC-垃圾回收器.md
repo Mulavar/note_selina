@@ -35,7 +35,7 @@
     - 并发清除阶段产生的新垃圾无法及时清除；
     - 有很多内存碎片；
 
-- Serial Old（MSC）：Serial在老年代的收集器，使用**“标记-压缩”（Mark-Compact）**算法。作为CMS收集器的后备预案，在并发收集发生**Concurrent Mode Failure**时使用。
+- Serial Old（MSC, Mark-Summary-Compaction）：Serial在老年代的收集器，使用**“标记-压缩”（Mark-Compact）**算法。作为CMS收集器的后备预案，在并发收集发生**Concurrent Mode Failure**时使用。
 
 - Parallel Old：Parallel Scavenge收集器的老年代版本，使用**多线程**和**“标记-压缩”**算法，适合**注重吞吐量**以及**CPU资源敏感**的场合。
 
@@ -64,3 +64,14 @@ HotSpot开发团队赋予它的使命是（在比较长期的）未来可以替�
 - `JNI Global` - 全局 `JNI` 引用
 - `Monitor Used` - 用于同步的监控对象
 - `Held by JVM` - **用于JVM特殊目的由GC保留的对象，但实际上这个与JVM的实现是有关的**。可能已知的一些类型是：系统类加载器、一些JVM知道的重要的异常类、一些用于处理异常的预分配对象以及一些自定义的类加载器等。然而，JVM并没有为这些对象提供其它的信息，因此需要去确定哪些是属于"JVM持有"的了。
+
+
+
+# 参考资料
+
+[Java-Parallel GC介绍](https://cloud.tencent.com/developer/article/1764615)
+
+[如何查看GC日志](https://www.cnblogs.com/klvchen/articles/11841337.html)
+
+[GC日志解读，这次别再说看不懂GC日志了](https://juejin.cn/post/7029130033268555807)
+

@@ -66,7 +66,7 @@ public class Server {
 }
 ```
 
-第一个 `@Value` 指代从配置文件中读取属性注入到名为 serverProperty 的 bean 对象中，而第二个 @Value 则是从名为 serverProperty 的 bean 对象中读取数据并注入到 server 中。
+第一个 `@Value` 指代从配置文件中读取属性注入到名为 serverProchperty 的 bean 对象中，而第二个 @Value 则是从名为 serverProperty 的 bean 对象中读取数据并注入到 server 中。
 
 注：@Value 想设置 null 默认值给 String 类型的变量时需如此 `@Value("${server.url: #{null}}")`。
 
